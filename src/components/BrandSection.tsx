@@ -6,7 +6,7 @@ import fomoBackground from '@/assets/fomo-background.jpeg';
 export const BrandSection = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
@@ -18,7 +18,7 @@ export const BrandSection = () => {
   return (
     <section className="py-24 relative overflow-hidden" ref={sectionRef}>
       {/* Parallax background gradient */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 bg-gradient-to-b from-transparent via-fomo-purple/5 to-transparent"
         style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '10%']) }}
       />
@@ -31,12 +31,22 @@ export const BrandSection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <h3 className="font-display text-2xl md:text-3xl font-bold mb-4">
+            <motion.h3
+              className="font-display text-2xl md:text-3xl font-bold mb-4"
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
               The <span className="gradient-text">FOMO</span> Brand
-            </h3>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+            </motion.h3>
+            <motion.p
+              className="text-muted-foreground max-w-xl mx-auto"
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
               A symbol of speed, precision, and the edge that separates winners from exit liquidity.
-            </p>
+            </motion.p>
           </motion.div>
         </Parallax>
 
@@ -47,11 +57,11 @@ export const BrandSection = () => {
           transition={{ delay: 0.2, duration: 0.8 }}
         >
           {/* Glow effect */}
-          <motion.div 
+          <motion.div
             className="absolute inset-0 bg-gradient-fomo opacity-20 blur-[50px] scale-105 rounded-3xl"
             style={{ scale: useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.1, 1]) }}
           />
-          
+
           <motion.div
             className="relative glass-strong rounded-3xl p-8 overflow-hidden"
             style={{ scale: imageScale, rotate: imageRotate }}
@@ -62,7 +72,7 @@ export const BrandSection = () => {
               alt="FOMO Brand Variations"
               className="w-full rounded-2xl"
             />
-            
+
             {/* Overlay gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent rounded-3xl" />
           </motion.div>

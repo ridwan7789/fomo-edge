@@ -6,7 +6,7 @@ import psychologyChart from '@/assets/psychology-chart.jpeg';
 export const PsychologySection = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
@@ -20,11 +20,11 @@ export const PsychologySection = () => {
   return (
     <section id="psychology" className="py-32 relative overflow-hidden" ref={sectionRef}>
       {/* Parallax background effects */}
-      <motion.div 
+      <motion.div
         className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-fomo-cyan/10 rounded-full blur-[150px]"
         style={{ y: backgroundY }}
       />
-      <motion.div 
+      <motion.div
         className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-fomo-purple/10 rounded-full blur-[120px]"
         style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '-20%']) }}
       />
@@ -41,29 +41,49 @@ export const PsychologySection = () => {
             <Parallax speed={0.15}>
               <motion.span
                 className="inline-block px-4 py-2 rounded-full glass text-fomo-mint text-sm font-medium mb-6"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 0.2 }}
+                initial={{ opacity: 0, scale: 0.9, filter: "blur(4px)" }}
+                animate={isInView ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
+                transition={{ delay: 0.2, duration: 0.6 }}
               >
                 Understanding the Cycle
               </motion.span>
 
-              <h2 className="font-display text-4xl md:text-5xl font-bold mb-8">
+              <motion.h2
+                className="font-display text-4xl md:text-5xl font-bold mb-8"
+                initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                transition={{ delay: 0.3, duration: 0.6 }}
+              >
                 The Psychology of a{' '}
                 <span className="gradient-text">Market Cycle</span>
-              </h2>
+              </motion.h2>
 
               <div className="space-y-6 text-muted-foreground">
-                <p className="text-lg leading-relaxed">
+                <motion.p
+                  className="text-lg leading-relaxed"
+                  initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                  animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                  transition={{ delay: 0.4, duration: 0.6 }}
+                >
                   Every cycle repeats. The crowd arrives late. Liquidity exits quietly.
-                </p>
-                <p className="text-lg leading-relaxed">
-                  FOMO was built to detect the <span className="text-foreground font-medium">moment before</span> emotion 
+                </motion.p>
+                <motion.p
+                  className="text-lg leading-relaxed"
+                  initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                  animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                >
+                  FOMO was built to detect the <span className="text-foreground font-medium">moment before</span> emotion
                   takes over. While others chase peaks, you're already positioned.
-                </p>
-                <p className="text-xl text-foreground font-medium border-l-2 border-fomo-purple pl-6">
+                </motion.p>
+                <motion.p
+                  className="text-xl text-foreground font-medium border-l-2 border-fomo-purple pl-6"
+                  initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                  animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                  transition={{ delay: 0.6, duration: 0.6 }}
+                >
                   "You are either early — or exit liquidity."
-                </p>
+                </motion.p>
               </div>
             </Parallax>
 
@@ -81,13 +101,23 @@ export const PsychologySection = () => {
               ].map((stat, index) => (
                 <Parallax key={stat.label} speed={0.1 * (index + 1)} direction="up">
                   <div className="text-center">
-                    <motion.div 
+                    <motion.div
                       className="font-display text-3xl md:text-4xl font-bold gradient-text mb-2"
+                      initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                      animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                      transition={{ delay: 0.7 + index * 0.1, duration: 0.5 }}
                       whileHover={{ scale: 1.1 }}
                     >
                       {stat.value}
                     </motion.div>
-                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                    <motion.div
+                      className="text-sm text-muted-foreground"
+                      initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+                      animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                      transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
+                    >
+                      {stat.label}
+                    </motion.div>
                   </div>
                 </Parallax>
               ))}
@@ -105,7 +135,7 @@ export const PsychologySection = () => {
             <div className="relative">
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-fomo opacity-20 blur-[40px] scale-105 rounded-3xl" />
-              
+
               <motion.div
                 className="relative glass-strong rounded-3xl p-4 overflow-hidden"
                 style={{ rotate: chartRotate }}
@@ -116,7 +146,7 @@ export const PsychologySection = () => {
                   alt="Psychology of Market Cycle"
                   className="w-full rounded-2xl"
                 />
-                
+
                 {/* Pulse indicator on FOMO peak */}
                 <motion.div
                   className="absolute top-[30%] left-[45%] w-4 h-4"

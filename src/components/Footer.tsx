@@ -5,7 +5,7 @@ import fomoLogo from '@/assets/fomo-logo.jpeg';
 
 export const Footer = () => {
   const sectionRef = useRef(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end end"]
@@ -17,13 +17,13 @@ export const Footer = () => {
   return (
     <footer id="footer" className="relative py-20 overflow-hidden" ref={sectionRef}>
       {/* Top glow line */}
-      <motion.div 
+      <motion.div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-fomo-purple to-transparent"
         style={{ scaleX: useTransform(scrollYProgress, [0, 0.5], [0, 1]) }}
       />
-      
+
       {/* Parallax Background */}
-      <motion.div 
+      <motion.div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-fomo-purple/10 rounded-full blur-[150px]"
         style={{ y: useTransform(scrollYProgress, [0, 1], ['50%', '0%']) }}
       />
@@ -52,17 +52,29 @@ export const Footer = () => {
           </motion.div>
 
           <Parallax speed={0.1}>
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+            <motion.h2
+              className="font-display text-4xl md:text-5xl font-bold mb-4"
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+            >
               <span className="gradient-text">FOMO</span>
-            </h2>
+            </motion.h2>
 
-            <p className="text-xl text-muted-foreground mb-10 max-w-md">
+            <motion.p
+              className="text-xl text-muted-foreground mb-10 max-w-md"
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
               Be early. Or be <span className="text-foreground">exit liquidity</span>.
-            </p>
+            </motion.p>
           </Parallax>
 
           {/* Social Links */}
-          <motion.div 
+          <motion.div
             className="flex items-center gap-6 mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -99,7 +111,7 @@ export const Footer = () => {
           </motion.div>
 
           {/* Divider */}
-          <motion.div 
+          <motion.div
             className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-border to-transparent mb-8"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
@@ -108,12 +120,12 @@ export const Footer = () => {
           />
 
           {/* Copyright */}
-          <motion.p 
+          <motion.p
             className="text-sm text-muted-foreground"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, filter: "blur(4px)" }}
+            whileInView={{ opacity: 1, filter: "blur(0px)" }}
             viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
           >
             © {new Date().getFullYear()} FOMO. Engineered for the edge.
           </motion.p>

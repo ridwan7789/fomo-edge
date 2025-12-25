@@ -33,7 +33,7 @@ const features = [
 export const AboutSection = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
@@ -45,7 +45,7 @@ export const AboutSection = () => {
   return (
     <section id="about" className="py-32 relative overflow-hidden" ref={sectionRef}>
       {/* Parallax background accent */}
-      <motion.div 
+      <motion.div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-fomo-purple/10 rounded-full blur-[150px]"
         style={{ y: backgroundY }}
       />
@@ -60,22 +60,32 @@ export const AboutSection = () => {
         >
           <motion.span
             className="inline-block px-4 py-2 rounded-full glass text-fomo-cyan text-sm font-medium mb-6"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.2 }}
+            initial={{ opacity: 0, scale: 0.9, filter: "blur(4px)" }}
+            animate={isInView ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
+            transition={{ delay: 0.2, duration: 0.6 }}
           >
             Why FOMO?
           </motion.span>
-          
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-8">
+
+          <motion.h2
+            className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-8"
+            initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+            animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
             Because most traders don't lose money by being{' '}
             <span className="gradient-text">wrong</span>
-          </h2>
-          
-          <p className="text-xl text-muted-foreground leading-relaxed">
-            They lose because they're <span className="text-foreground font-medium">late</span>. 
+          </motion.h2>
+
+          <motion.p
+            className="text-xl text-muted-foreground leading-relaxed"
+            initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+            animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            They lose because they're <span className="text-foreground font-medium">late</span>.
             FOMO exists to eliminate hesitation and delay — replacing it with data, speed, and conviction.
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -93,14 +103,24 @@ export const AboutSection = () => {
                     <feature.icon className="w-6 h-6 text-foreground" />
                   </div>
                 </div>
-                
-                <h3 className="font-display text-xl font-semibold mb-3 group-hover:gradient-text transition-all">
+
+                <motion.h3
+                  className="font-display text-xl font-semibold mb-3 group-hover:gradient-text transition-all"
+                  initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+                  animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                  transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
+                >
                   {feature.title}
-                </h3>
-                
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                </motion.h3>
+
+                <motion.p
+                  className="text-muted-foreground text-sm leading-relaxed"
+                  initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+                  animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                  transition={{ delay: 0.6 + index * 0.1, duration: 0.5 }}
+                >
                   {feature.description}
-                </p>
+                </motion.p>
 
                 {/* Hover glow effect */}
                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />

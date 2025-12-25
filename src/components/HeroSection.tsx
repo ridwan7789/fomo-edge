@@ -7,7 +7,7 @@ import { ChevronDown, Zap, Signal } from 'lucide-react';
 
 export const HeroSection = () => {
   const sectionRef = useRef(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"]
@@ -21,21 +21,21 @@ export const HeroSection = () => {
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       <ParticleBackground />
-      
+
       {/* Parallax gradient orbs */}
-      <motion.div 
+      <motion.div
         className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-fomo-purple/20 rounded-full blur-[120px]"
         style={{ y: backgroundY }}
         animate={{ scale: [1, 1.1, 1] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div 
+      <motion.div
         className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-fomo-cyan/15 rounded-full blur-[100px]"
         style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '40%']) }}
         animate={{ scale: [1, 1.15, 1] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
       />
-      <motion.div 
+      <motion.div
         className="absolute top-1/2 right-1/3 w-[300px] h-[300px] bg-fomo-mint/10 rounded-full blur-[80px]"
         style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '25%']) }}
         animate={{ scale: [1, 1.2, 1] }}
@@ -54,9 +54,9 @@ export const HeroSection = () => {
           >
             <motion.span
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-fomo-cyan font-medium mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ delay: 0.2, duration: 0.6 }}
             >
               <span className="w-2 h-2 rounded-full bg-fomo-mint animate-pulse" />
               Live on Solana
@@ -64,8 +64,8 @@ export const HeroSection = () => {
 
             <motion.h1
               className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ delay: 0.3, duration: 0.8 }}
             >
               <span className="text-foreground">WELCOME TO </span>
@@ -74,28 +74,28 @@ export const HeroSection = () => {
 
             <motion.p
               className="text-xl md:text-2xl text-muted-foreground mb-4 font-light"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ delay: 0.5, duration: 0.6 }}
             >
               Most traders don't lose because they're wrong.
             </motion.p>
             <motion.p
               className="text-xl md:text-2xl text-foreground mb-8 font-medium"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ delay: 0.6, duration: 0.6 }}
             >
               They lose because they're <span className="gradient-text">late</span>.
             </motion.p>
 
             <motion.p
               className="text-muted-foreground max-w-xl mb-10 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ delay: 0.7, duration: 0.6 }}
             >
-              FOMO is a Solana memecoin utility built for speed, signal, and survival. 
+              FOMO is a Solana memecoin utility built for speed, signal, and survival.
               Designed for traders who want to move before the crowd, not after it.
             </motion.p>
 
@@ -135,7 +135,7 @@ export const HeroSection = () => {
             <div className="relative">
               {/* Glow behind mascot */}
               <div className="absolute inset-0 bg-gradient-fomo opacity-30 blur-[60px] scale-110 rounded-full" />
-              
+
               <motion.div
                 className="relative"
                 animate={{ y: [0, -15, 0] }}
@@ -149,7 +149,7 @@ export const HeroSection = () => {
                     filter: 'drop-shadow(0 0 40px rgba(168, 85, 247, 0.4))',
                   }}
                 />
-                
+
                 {/* Floating elements with different parallax speeds */}
                 <Parallax speed={0.3} direction="down">
                   <motion.div
@@ -157,20 +157,20 @@ export const HeroSection = () => {
                     animate={{ rotate: [0, 5, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    
+
                   </motion.div>
                 </Parallax>
-                
+
                 <Parallax speed={0.5} direction="up">
                   <motion.div
                     className="absolute top-1/4 -left-8 p-3 glass rounded-xl"
                     animate={{ rotate: [0, -5, 0] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                   >
-                   
+
                   </motion.div>
                 </Parallax>
-                
+
                 <Parallax speed={0.4} direction="down">
                   <motion.div
                     className="absolute bottom-1/4 -right-8 p-3 glass rounded-xl"

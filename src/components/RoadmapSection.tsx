@@ -37,7 +37,7 @@ const phases = [
 export const RoadmapSection = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
@@ -49,7 +49,7 @@ export const RoadmapSection = () => {
   return (
     <section id="roadmap" className="py-32 relative overflow-hidden" ref={sectionRef}>
       {/* Parallax Background */}
-      <motion.div 
+      <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] bg-fomo-purple/5 rounded-full blur-[150px]"
         style={{ y: backgroundY }}
       />
@@ -64,20 +64,30 @@ export const RoadmapSection = () => {
           >
             <motion.span
               className="inline-block px-4 py-2 rounded-full glass text-fomo-peach text-sm font-medium mb-6"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.2 }}
+              initial={{ opacity: 0, scale: 0.9, filter: "blur(4px)" }}
+              animate={isInView ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
+              transition={{ delay: 0.2, duration: 0.6 }}
             >
               The Path Forward
             </motion.span>
 
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <motion.h2
+              className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
               <span className="gradient-text">Roadmap</span>
-            </h2>
-            
-            <p className="text-muted-foreground text-lg">
+            </motion.h2>
+
+            <motion.p
+              className="text-muted-foreground text-lg"
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
               Building the future of on-chain intelligence, one phase at a time.
-            </p>
+            </motion.p>
           </motion.div>
         </Parallax>
 
@@ -85,7 +95,7 @@ export const RoadmapSection = () => {
         <div className="relative max-w-5xl mx-auto">
           {/* Animated connecting line */}
           <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border hidden lg:block overflow-hidden">
-            <motion.div 
+            <motion.div
               className="w-full bg-gradient-to-b from-fomo-purple via-fomo-cyan to-fomo-mint"
               style={{ height: lineProgress }}
             />
@@ -93,9 +103,9 @@ export const RoadmapSection = () => {
 
           <div className="space-y-12 lg:space-y-0">
             {phases.map((phase, index) => (
-              <Parallax 
-                key={phase.phase} 
-                speed={0.1 * (index + 1)} 
+              <Parallax
+                key={phase.phase}
+                speed={0.1 * (index + 1)}
                 direction={index % 2 === 0 ? 'up' : 'down'}
               >
                 <motion.div
@@ -147,8 +157,22 @@ export const RoadmapSection = () => {
                           }`} />
                         </div>
                         <div>
-                          <span className="text-fomo-cyan text-sm font-medium">{phase.phase}</span>
-                          <h3 className="font-display text-2xl font-bold">{phase.title}</h3>
+                          <motion.span
+                            className="text-fomo-cyan text-sm font-medium"
+                            initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+                            animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                            transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
+                          >
+                            {phase.phase}
+                          </motion.span>
+                          <motion.h3
+                            className="font-display text-2xl font-bold"
+                            initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+                            animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                            transition={{ delay: 0.6 + index * 0.1, duration: 0.5 }}
+                          >
+                            {phase.title}
+                          </motion.h3>
                         </div>
                       </div>
 
@@ -158,9 +182,9 @@ export const RoadmapSection = () => {
                             key={i}
                             className="text-muted-foreground flex items-center gap-2"
                             style={{ justifyContent: index % 2 === 0 ? 'flex-end' : 'flex-start' }}
-                            initial={{ opacity: 0, x: index % 2 === 0 ? 20 : -20 }}
-                            animate={isInView ? { opacity: 1, x: 0 } : {}}
-                            transition={{ delay: 0.4 + index * 0.1 + i * 0.05 }}
+                            initial={{ opacity: 0, x: index % 2 === 0 ? 20 : -20, filter: "blur(4px)" }}
+                            animate={isInView ? { opacity: 1, x: 0, filter: "blur(0px)" } : {}}
+                            transition={{ delay: 0.4 + index * 0.1 + i * 0.05, duration: 0.5 }}
                           >
                             {index % 2 !== 0 && (
                               <span className={`w-1.5 h-1.5 rounded-full ${
@@ -178,7 +202,7 @@ export const RoadmapSection = () => {
                       </ul>
 
                       {phase.status === 'active' && (
-                        <motion.div 
+                        <motion.div
                           className="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fomo-purple/20 text-fomo-purple text-sm"
                           animate={{ scale: [1, 1.02, 1] }}
                           transition={{ duration: 2, repeat: Infinity }}
