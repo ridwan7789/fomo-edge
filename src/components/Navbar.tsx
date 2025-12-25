@@ -5,6 +5,7 @@ import fomoLogo from '@/assets/fomo-logo.jpeg';
 
 const navItems = [
   { label: 'About', href: '#about' },
+  { label: 'App', href: '#app' },
   { label: 'Psychology', href: '#psychology' },
   { label: 'Roadmap', href: '#roadmap' },
   { label: 'Socials', href: '#footer' },
