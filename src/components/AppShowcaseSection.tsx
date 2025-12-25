@@ -1,7 +1,8 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Parallax } from './Parallax';
 import { Play } from 'lucide-react';
+import { DownloadPopup } from './DownloadPopup';
 import fomoPreview from '@/assets/fomo-preview.mp4';
 import momoDemo from '@/assets/momo-demo.mp4';
 import fomoApk from '@/assets/fomo-apk.jpeg';
@@ -9,7 +10,8 @@ import fomoApk from '@/assets/fomo-apk.jpeg';
 export const AppShowcaseSection = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
@@ -20,14 +22,18 @@ export const AppShowcaseSection = () => {
   const video2X = useTransform(scrollYProgress, [0, 1], ['20px', '-20px']);
   const appY = useTransform(scrollYProgress, [0, 1], ['30px', '-30px']);
 
+  const handleDownloadClick = () => {
+    setIsPopupOpen(true);
+  };
+
   return (
     <section id="app" className="py-32 relative overflow-hidden" ref={sectionRef}>
       {/* Parallax background effects */}
-      <motion.div 
+      <motion.div
         className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-fomo-purple/15 rounded-full blur-[150px]"
         style={{ y: backgroundY }}
       />
-      <motion.div 
+      <motion.div
         className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-fomo-cyan/10 rounded-full blur-[120px]"
         style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '-20%']) }}
       />
@@ -71,7 +77,7 @@ export const AppShowcaseSection = () => {
             transition={{ delay: 0.3, duration: 0.8 }}
           >
             <div className="absolute inset-0 bg-gradient-fomo opacity-20 blur-[30px] scale-105 rounded-3xl" />
-            <motion.div 
+            <motion.div
               className="relative glass-strong rounded-3xl overflow-hidden"
               whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
             >
@@ -107,7 +113,7 @@ export const AppShowcaseSection = () => {
             transition={{ delay: 0.4, duration: 0.8 }}
           >
             <div className="absolute inset-0 bg-fomo-cyan/20 blur-[30px] scale-105 rounded-3xl" />
-            <motion.div 
+            <motion.div
               className="relative glass-strong rounded-3xl overflow-hidden"
               whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
             >
@@ -169,15 +175,16 @@ export const AppShowcaseSection = () => {
                   <span className="gradient-text">Pocket</span>
                 </h3>
                 <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                  Access FOMO anywhere, anytime. Get instant notifications on token movements, 
+                  Access FOMO anywhere, anytime. Get instant notifications on token movements,
                   execute trades on the go, and never miss an opportunity again.
                 </p>
-                
+
                 <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
                   <motion.button
                     className="btn-primary"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={handleDownloadClick}
                   >
                     Download App
                   </motion.button>
@@ -194,6 +201,12 @@ export const AppShowcaseSection = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Download Popup */}
+      <DownloadPopup
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+      />
     </section>
   );
 };

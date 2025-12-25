@@ -68,9 +68,8 @@ export const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
             >
-              <span className="text-foreground">gm </span>
-              <span className="gradient-text">degens</span>
-              <span className="text-foreground"> 👋</span>
+              <span className="text-foreground">WELCOME TO </span>
+              <span className="gradient-text">FOMO</span>
             </motion.h1>
 
             <motion.p
@@ -158,7 +157,7 @@ export const HeroSection = () => {
                     animate={{ rotate: [0, 5, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <span className="text-2xl">🚀</span>
+                    
                   </motion.div>
                 </Parallax>
                 
@@ -168,7 +167,7 @@ export const HeroSection = () => {
                     animate={{ rotate: [0, -5, 0] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                   >
-                    <span className="text-2xl">⚡</span>
+                   
                   </motion.div>
                 </Parallax>
                 
@@ -178,7 +177,7 @@ export const HeroSection = () => {
                     animate={{ rotate: [0, 3, 0] }}
                     transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   >
-                    <span className="text-2xl">💎</span>
+                    <span className="text-2xl"></span>
                   </motion.div>
                 </Parallax>
               </motion.div>
@@ -201,7 +200,7 @@ export const HeroSection = () => {
           transition={{ duration: 2, repeat: Infinity }}
           onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
         >
-          <span className="text-sm">Scroll to explore</span>
+          <span className="text-sm"></span>
           <ChevronDown size={20} />
         </motion.div>
       </motion.div>
