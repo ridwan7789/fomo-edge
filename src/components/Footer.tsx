@@ -75,7 +75,7 @@ export const Footer = () => {
 
           {/* Social Links */}
           <motion.div
-            className="flex items-center gap-6 mb-12"
+            className="flex flex-wrap items-center justify-center gap-4 mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -107,6 +107,20 @@ export const Footer = () => {
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
               </svg>
               <span className="font-medium">Telegram</span>
+            </motion.a>
+
+            <motion.a
+              href="https://docs.fomoofchain.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-3 px-6 py-3 glass rounded-xl hover:border-fomo-cyan/50 transition-all"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <svg className="w-5 h-5 text-foreground" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M5.242 6.4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4.4l-2 2V18c0 .6-.4 1-1 1H5c-.6 0-1-.4-1-1V8.4c0-.6.4-1 1-1h.242c.56 0 1.029-.448 1-1-.03-.552-.44-.982-1-.982zM21 3c0 .6-.4 1-1 1h-5c-.6 0-1-.4-1-1s.4-1 1-1h4V.5c0-.3.2-.5.5-.5s.5.2.5.5V3zm-5.5 4c-.3 0-.5.2-.5.5v5c0 .3.2.5.5.5h5c.3 0 .5-.2.5-.5v-5c0-.3-.2-.5-.5-.5h-5zm-9 6c-1.1 0-2 .9-2 2v5c0 1.1.9 2 2 2h5c1.1 0 2-.9 2-2v-5c0-1.1-.9-2-2-2h-5zm.5 2h4c.3 0 .5.2.5.5v4c0 .3-.2.5-.5.5h-4c-.3 0-.5-.2-.5-.5v-4c0-.3.2-.5.5-.5z" />
+              </svg>
+              <span className="font-medium">Docs</span>
             </motion.a>
           </motion.div>
 
