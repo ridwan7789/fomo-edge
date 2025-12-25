@@ -1,45 +1,74 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Parallax } from './Parallax';
 import fomoLogo from '@/assets/fomo-logo.jpeg';
 
 export const Footer = () => {
+  const sectionRef = useRef(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end end"]
+  });
+
+  const logoScale = useTransform(scrollYProgress, [0, 0.5], [0.8, 1]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['50px', '0px']);
+
   return (
-    <footer id="footer" className="relative py-20 overflow-hidden">
+    <footer id="footer" className="relative py-20 overflow-hidden" ref={sectionRef}>
       {/* Top glow line */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-fomo-purple to-transparent" />
+      <motion.div 
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-fomo-purple to-transparent"
+        style={{ scaleX: useTransform(scrollYProgress, [0, 0.5], [0, 1]) }}
+      />
       
-      {/* Background */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-fomo-purple/10 rounded-full blur-[150px]" />
+      {/* Parallax Background */}
+      <motion.div 
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-fomo-purple/10 rounded-full blur-[150px]"
+        style={{ y: useTransform(scrollYProgress, [0, 1], ['50%', '0%']) }}
+      />
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           className="flex flex-col items-center text-center"
+          style={{ y: contentY }}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          {/* Logo */}
-          <motion.img
-            src={fomoLogo}
-            alt="FOMO"
-            className="w-24 h-24 rounded-full mb-8 shadow-lg"
-            whileHover={{ scale: 1.05, rotate: 5 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            style={{
-              filter: 'drop-shadow(0 0 30px rgba(168, 85, 247, 0.4))',
-            }}
-          />
+          {/* Logo with parallax scale */}
+          <motion.div style={{ scale: logoScale }}>
+            <motion.img
+              src={fomoLogo}
+              alt="FOMO"
+              className="w-24 h-24 rounded-full mb-8 shadow-lg"
+              whileHover={{ scale: 1.1, rotate: 10 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              style={{
+                filter: 'drop-shadow(0 0 30px rgba(168, 85, 247, 0.4))',
+              }}
+            />
+          </motion.div>
 
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
-            <span className="gradient-text">FOMO</span>
-          </h2>
+          <Parallax speed={0.1}>
+            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+              <span className="gradient-text">FOMO</span>
+            </h2>
 
-          <p className="text-xl text-muted-foreground mb-10 max-w-md">
-            Be early. Or be <span className="text-foreground">exit liquidity</span>.
-          </p>
+            <p className="text-xl text-muted-foreground mb-10 max-w-md">
+              Be early. Or be <span className="text-foreground">exit liquidity</span>.
+            </p>
+          </Parallax>
 
           {/* Social Links */}
-          <div className="flex items-center gap-6 mb-12">
+          <motion.div 
+            className="flex items-center gap-6 mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
             <motion.a
               href="https://x.com/FomoofChain"
               target="_blank"
@@ -67,15 +96,27 @@ export const Footer = () => {
               </svg>
               <span className="font-medium">Telegram</span>
             </motion.a>
-          </div>
+          </motion.div>
 
           {/* Divider */}
-          <div className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-border to-transparent mb-8" />
+          <motion.div 
+            className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-border to-transparent mb-8"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          />
 
           {/* Copyright */}
-          <p className="text-sm text-muted-foreground">
+          <motion.p 
+            className="text-sm text-muted-foreground"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+          >
             © {new Date().getFullYear()} FOMO. Engineered for the edge.
-          </p>
+          </motion.p>
         </motion.div>
       </div>
     </footer>
