@@ -1,23 +1,53 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ParticleBackground } from './ParticleBackground';
+import { Parallax } from './Parallax';
 import fomoMascot from '@/assets/fomo-mascot.jpeg';
 import { ChevronDown, Zap, Signal } from 'lucide-react';
 
 export const HeroSection = () => {
+  const sectionRef = useRef(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  const mascotY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       <ParticleBackground />
       
-      {/* Gradient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-fomo-purple/20 rounded-full blur-[120px] animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-fomo-cyan/15 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
-      <div className="absolute top-1/2 right-1/3 w-[300px] h-[300px] bg-fomo-mint/10 rounded-full blur-[80px] animate-pulse" style={{ animationDelay: '2s' }} />
+      {/* Parallax gradient orbs */}
+      <motion.div 
+        className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-fomo-purple/20 rounded-full blur-[120px]"
+        style={{ y: backgroundY }}
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div 
+        className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-fomo-cyan/15 rounded-full blur-[100px]"
+        style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '40%']) }}
+        animate={{ scale: [1, 1.15, 1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      />
+      <motion.div 
+        className="absolute top-1/2 right-1/3 w-[300px] h-[300px] bg-fomo-mint/10 rounded-full blur-[80px]"
+        style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '25%']) }}
+        animate={{ scale: [1, 1.2, 1] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <motion.div className="container mx-auto px-6 relative z-10" style={{ opacity }}>
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Content */}
+          {/* Content with parallax */}
           <motion.div
             className="text-center lg:text-left"
+            style={{ y: textY }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
@@ -95,9 +125,10 @@ export const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Mascot */}
+          {/* Mascot with parallax */}
           <motion.div
             className="relative flex justify-center lg:justify-end"
+            style={{ y: mascotY }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 1, ease: [0.4, 0, 0.2, 1] }}
@@ -120,37 +151,46 @@ export const HeroSection = () => {
                   }}
                 />
                 
-                {/* Floating elements around mascot */}
-                <motion.div
-                  className="absolute -top-4 -right-4 p-3 glass rounded-xl"
-                  animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <span className="text-2xl">🚀</span>
-                </motion.div>
-                <motion.div
-                  className="absolute top-1/4 -left-8 p-3 glass rounded-xl"
-                  animate={{ y: [0, 10, 0], rotate: [0, -5, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                >
-                  <span className="text-2xl">⚡</span>
-                </motion.div>
-                <motion.div
-                  className="absolute bottom-1/4 -right-8 p-3 glass rounded-xl"
-                  animate={{ y: [0, -8, 0], rotate: [0, 3, 0] }}
-                  transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                >
-                  <span className="text-2xl">💎</span>
-                </motion.div>
+                {/* Floating elements with different parallax speeds */}
+                <Parallax speed={0.3} direction="down">
+                  <motion.div
+                    className="absolute -top-4 -right-4 p-3 glass rounded-xl"
+                    animate={{ rotate: [0, 5, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <span className="text-2xl">🚀</span>
+                  </motion.div>
+                </Parallax>
+                
+                <Parallax speed={0.5} direction="up">
+                  <motion.div
+                    className="absolute top-1/4 -left-8 p-3 glass rounded-xl"
+                    animate={{ rotate: [0, -5, 0] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                  >
+                    <span className="text-2xl">⚡</span>
+                  </motion.div>
+                </Parallax>
+                
+                <Parallax speed={0.4} direction="down">
+                  <motion.div
+                    className="absolute bottom-1/4 -right-8 p-3 glass rounded-xl"
+                    animate={{ rotate: [0, 3, 0] }}
+                    transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                  >
+                    <span className="text-2xl">💎</span>
+                  </motion.div>
+                </Parallax>
               </motion.div>
             </div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        style={{ opacity }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}

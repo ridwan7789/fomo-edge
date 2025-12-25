@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { Parallax } from './Parallax';
 import { Radar, Zap, Activity, Shield } from 'lucide-react';
 
 const features = [
@@ -31,17 +31,29 @@ const features = [
 ];
 
 export const AboutSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
+  const titleY = useTransform(scrollYProgress, [0, 1], ['0px', '-30px']);
 
   return (
-    <section id="about" className="py-32 relative overflow-hidden" ref={ref}>
-      {/* Background accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-fomo-purple/10 rounded-full blur-[150px]" />
+    <section id="about" className="py-32 relative overflow-hidden" ref={sectionRef}>
+      {/* Parallax background accent */}
+      <motion.div 
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-fomo-purple/10 rounded-full blur-[150px]"
+        style={{ y: backgroundY }}
+      />
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           className="text-center max-w-3xl mx-auto mb-20"
+          style={{ y: titleY }}
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
@@ -68,30 +80,32 @@ export const AboutSection = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              className="feature-card group"
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 + index * 0.1, duration: 0.6 }}
-            >
-              <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.gradient} p-0.5 mb-6`}>
-                <div className="w-full h-full rounded-xl bg-card flex items-center justify-center">
-                  <feature.icon className="w-6 h-6 text-foreground" />
+            <Parallax key={feature.title} speed={0.1 * (index + 1)} direction={index % 2 === 0 ? 'up' : 'down'}>
+              <motion.div
+                className="feature-card group h-full"
+                initial={{ opacity: 0, y: 40 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.2 + index * 0.1, duration: 0.6 }}
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              >
+                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.gradient} p-0.5 mb-6`}>
+                  <div className="w-full h-full rounded-xl bg-card flex items-center justify-center">
+                    <feature.icon className="w-6 h-6 text-foreground" />
+                  </div>
                 </div>
-              </div>
-              
-              <h3 className="font-display text-xl font-semibold mb-3 group-hover:gradient-text transition-all">
-                {feature.title}
-              </h3>
-              
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {feature.description}
-              </p>
+                
+                <h3 className="font-display text-xl font-semibold mb-3 group-hover:gradient-text transition-all">
+                  {feature.title}
+                </h3>
+                
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {feature.description}
+                </p>
 
-              {/* Hover glow effect */}
-              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-            </motion.div>
+                {/* Hover glow effect */}
+                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+              </motion.div>
+            </Parallax>
           ))}
         </div>
       </div>
